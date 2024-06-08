@@ -5,13 +5,13 @@ import ImageCard from '../ImageCard/ImageCard';
 
 import './ImageModal.css';
 
-function ImageModal({ showModal, setShowModal }) {
+function ImageModal({ showModal, closeModal }) {
   return (
     <ReactModal
       isOpen={showModal.isOpen}
       contentLabel="Minimal Modal Example"
       shouldCloseOnOverlayClick={true}
-      onRequestClose={() => setShowModal({ isOpen: false, photo: null })}
+      onRequestClose={closeModal}
       className={'modal'}
       overlayClassName={'overlay'}
       closeTimeoutMS={150}
@@ -20,7 +20,7 @@ function ImageModal({ showModal, setShowModal }) {
         title="Icon for close image"
         size={40}
         color="white"
-        onClick={() => setShowModal({ isOpen: false, photo: null })}
+        onClick={closeModal}
       />
 
       {showModal.photo && <ImageCard photo={showModal.photo} modal={true} />}
@@ -30,7 +30,7 @@ function ImageModal({ showModal, setShowModal }) {
 
 ImageModal.propTypes = {
   showModal: PropTypes.object,
-  setShowModal: PropTypes.func,
+  closeModal: PropTypes.func,
 };
 
 export default ImageModal;

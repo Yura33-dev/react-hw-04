@@ -1,13 +1,20 @@
-import PropTypes, { bool } from 'prop-types';
+import PropTypes from 'prop-types';
 import styles from './ImageCard.module.css';
 
-function ImageCard({ photo, modal }) {
+function ImageCard({ photo, modal, onOpen }) {
+  function clickHandler() {
+    if (!modal) {
+      onOpen(photo);
+    }
+  }
+
   return (
     <div className={styles.wrapper}>
       <img
         className={styles.img}
         src={modal ? photo.fullImg : photo.thumbImg}
         alt={photo.alt}
+        onClick={clickHandler}
       />
     </div>
   );
@@ -15,7 +22,8 @@ function ImageCard({ photo, modal }) {
 
 ImageCard.propTypes = {
   photo: PropTypes.object,
-  modal: bool,
+  modal: PropTypes.bool,
+  onOpen: PropTypes.func,
 };
 
 export default ImageCard;

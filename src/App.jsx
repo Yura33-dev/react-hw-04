@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import { Grid as GridLoader } from 'react-loader-spinner';
 import ReactModal from 'react-modal';
@@ -11,8 +11,6 @@ import ErrorMessage from './components/ErrorMessage/ErrorMessage';
 import LoadMoreBtn from './components/LoadMoreBtn/LoadMoreBtn';
 import ImageModal from './components/ImageModal/ImageModal';
 
-import { queryContext } from './context/queryContext/queryContext';
-
 ReactModal.setAppElement('#root');
 
 function App() {
@@ -22,7 +20,13 @@ function App() {
 
   const [showModal, setShowModal] = useState({ isOpen: false, photo: null });
 
-  const { query, page } = useContext(queryContext);
+  const [query, setQuery] = useState(null);
+  const [page, setPage] = useState(1);
+
+  function updateQuery(string) {
+    setPage(1);
+    setQuery(string);
+  }
 
   useEffect(() => {
     makeRequest(query, page);
@@ -64,9 +68,13 @@ function App() {
     setShowModal({ isOpen: true, photo });
   }
 
+  function closeImage() {
+    setShowModal({ isOpen: false, photo: null });
+  }
+
   return (
     <>
-      <SearchBar />
+      <SearchBar onSubmit={updateQuery} />
       {error && <ErrorMessage />}
       {photos.length > 0 && !error && (
         <ImageGallery photos={photos} onOpen={openImage} />
@@ -81,9 +89,11 @@ function App() {
         wrapperStyle={{}}
         wrapperClass="load-wrapper"
       />
-      {photos.length > 0 && !error && <LoadMoreBtn onLoading={loading} />}
+      {photos.length > 0 && !error && (
+        <LoadMoreBtn onLoading={loading} setPage={setPage} />
+      )}
       <Toaster />
-      <ImageModal showModal={showModal} setShowModal={setShowModal} />
+      <ImageModal showModal={showModal} closeModal={closeImage} />
     </>
   );
 }

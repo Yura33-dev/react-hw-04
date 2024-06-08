@@ -7,8 +7,8 @@ function ImageGallery({ photos, onOpen }) {
   return (
     <ul className={styles.ul}>
       {photos.map(photo => (
-        <li key={photo.id} className={styles.li} onClick={() => onOpen(photo)}>
-          <ImageCard photo={photo} modal={false} />
+        <li key={photo.id} className={styles.li}>
+          <ImageCard photo={photo} modal={false} onOpen={onOpen} />
         </li>
       ))}
     </ul>

@@ -1,12 +1,8 @@
 import PropTypes from 'prop-types';
 
 import styles from './LoadMoreBtn.module.css';
-import { useContext } from 'react';
-import { queryContext } from '../../context/queryContext/queryContext';
 
-function LoadMoreBtn({ onLoading }) {
-  const { setPage } = useContext(queryContext);
-
+function LoadMoreBtn({ onLoading, setPage }) {
   return (
     <button
       type="button"
@@ -22,6 +18,7 @@ function LoadMoreBtn({ onLoading }) {
 LoadMoreBtn.propTypes = {
   onLoadMore: PropTypes.func,
   onLoading: PropTypes.bool,
+  setPage: PropTypes.func,
 };
 
 export default LoadMoreBtn;

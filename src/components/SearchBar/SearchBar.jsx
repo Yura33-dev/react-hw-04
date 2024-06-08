@@ -1,12 +1,8 @@
 import styles from './SearchBar.module.css';
 import PropTypes from 'prop-types';
-import { useContext } from 'react';
 import toast from 'react-hot-toast';
-import { queryContext } from '../../context/queryContext/queryContext';
 
-function SearchBar() {
-  const { updateQuery } = useContext(queryContext);
-
+function SearchBar({ onSubmit }) {
   function submitHandler(e) {
     e.preventDefault();
     const { search } = e.target.elements;
@@ -20,7 +16,8 @@ function SearchBar() {
         icon: '⚠️',
       });
     }
-    updateQuery(searchString);
+
+    onSubmit(searchString);
   }
 
   return (
